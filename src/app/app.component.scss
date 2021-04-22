@@ -1,0 +1,18 @@
+.app-grid {
+  display: grid;
+  grid-template:
+    "header header" auto
+    "toolbar graph" 1fr
+    / 340px 1fr;
+}
+
+cm-header {
+  grid-area: header;
+}
+cm-toolbar {
+  grid-area: toolbar;
+}
+
+cm-graph-canvas {
+  grid-area: graph;
+}
