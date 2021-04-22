@@ -3,15 +3,22 @@
   <input
     type="text"
     class="w-8/12"
-    (change)="titleSubject$.next('hello')"
-    [ngModel]="titleSubject$ | async"
+    (change)="onTitleChange$.next($event.target.value)"
+    #inputTitle
+    [value]="title"
   />
 </td>
 <td></td>
 <td>
-  <input type="text" class="w-6/12" />
+  <input
+    type="text"
+    class="w-6/12"
+    #inputValue
+    (change)="onValueChange$.next($event.target.value)"
+    [value]="value"
+  />
 </td>
-<td>
+<td (click)="onDeleteClick()">
   <svg
     style="width: 20px; height: 20px"
     [hidden]="false"

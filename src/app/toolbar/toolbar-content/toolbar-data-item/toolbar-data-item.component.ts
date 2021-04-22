@@ -1,6 +1,22 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  fromEvent,
+  merge,
+  Subject,
+} from 'rxjs';
+import { map, withLatestFrom } from 'rxjs/operators';
 import { SubscriptionCollection, unsubscribeCollection } from 'src/utils';
 
 export interface ToolbarDataItem {
@@ -21,38 +37,53 @@ export interface ToolbarDataItem {
   ],
 })
 export class ToolbarDataItemComponent
-  implements OnInit, OnDestroy, ControlValueAccessor {
-  public titleSubject$: BehaviorSubject<string>;
-  public valueSubject$: BehaviorSubject<string>;
+  implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
+  public onTitleChange$: BehaviorSubject<string> = new BehaviorSubject('');
+  public onValueChange$: BehaviorSubject<string> = new BehaviorSubject('');
   private subs: SubscriptionCollection = {};
-  private _value: ToolbarDataItem = {
-    title: '',
-    value: '',
-  };
-  private onChange: (value: ToolbarDataItem) => void;
+  public title: string = '';
+  public value: string = '';
 
-  writeValue(obj: ToolbarDataItem): void {
-    this._value = obj;
+  constructor(private cdf: ChangeDetectorRef) {}
+
+  private onChange = (value: ToolbarDataItem) => {};
+
+  writeValue(obj: ToolbarDataItem | null): void {
+    console.log('Write value');
+    if (obj) {
+      console.log(obj.title, obj.value, this.onValueChange$);
+      // this.onTitleChange$.next(obj.title);
+      // this.onValueChange$.next(obj.value);
+      this.title = obj.title;
+      this.value = obj.value;
+    }
   }
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: ToolbarDataItem) => void): void {
     this.onChange = fn;
   }
   registerOnTouched(fn: any): void {
     //
   }
 
-  ngOnInit(): void {
-    this.titleSubject$ = new BehaviorSubject(this._value.title);
-    this.valueSubject$ = new BehaviorSubject(this._value.value);
+  ngAfterViewInit() {
+    this.cdf.markForCheck();
+    console.log('After view init');
+  }
 
+  ngOnInit(): void {
     this.subs.values = combineLatest([
-      this.titleSubject$,
-      this.valueSubject$,
+      this.onTitleChange$,
+      this.onValueChange$,
     ]).subscribe(([title, value]) => {
-      this._value.title = title;
-      this._value.value = value;
-      this.onChange(this._value);
+      console.log(title, value);
+
+      this.onChange({ title, value });
     });
+  }
+
+  onDeleteClick() {
+    this.onValueChange$.next('Delete');
+    console.log(this.onValueChange$);
   }
 
   ngOnDestroy(): void {
