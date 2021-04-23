@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ToolbarDesignService } from 'src/app/services/toolbar-design.service';
-import { ChartType } from 'src/app/types';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ToolbarService } from 'src/app/services/toolbar.service';
+import { ChartType, ChartTypeItem } from 'src/app/types';
 
 @Component({
   selector: 'cm-toolbar-design',
@@ -21,14 +23,23 @@ export class ToolbarDesignComponent implements OnInit {
       type: 'line',
       image: '/assets/images/line-chart.svg',
     },
+    {
+      type: 'bar',
+      image: '/assets/images/bar-chart.svg',
+    },
   ];
 
-  constructor(private toolbarDesignService: ToolbarDesignService) {}
+  constructor(private toolbarService: ToolbarService) {}
+  public chartTypeItem$: Observable<ChartTypeItem>;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.chartTypeItem$ = this.toolbarService.toolbarDesign$.pipe(
+      map((td) => td.type)
+    );
+  }
 
   public handleChartTypeClick(chartType: ChartType) {
-    this.toolbarDesignService.toolbarDesign$.next({
+    this.toolbarService.toolbarDesign$.next({
       type: chartType.type,
     });
   }

@@ -6,6 +6,7 @@ import { ToolbarDesignComponent } from './toolbar-design/toolbar-design.componen
 import { ToolbarRoutingModule } from './toolbar-routing.module';
 import { ToolbarDataItemComponent } from './toolbar-content/toolbar-data-item/toolbar-data-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UiElementsModule } from '../ui-elements/ui-elements.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ToolbarRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    UiElementsModule,
   ],
   exports: [ToolbarComponent],
 })

@@ -8,9 +8,12 @@
         *ngFor="let chartType of chartTypes"
         (click)="handleChartTypeClick(chartType)"
         class="flex flex-col items-center w-full bg-gray-200 p-2 rounded shadow-md"
+        [ngClass]="{
+          'bg-green-500': (chartTypeItem$ | async) === chartType.type
+        }"
       >
         <div>
-          <img [src]="chartType.image" />
+          <img [src]="chartType.image" class="w-10 h-10" />
         </div>
         <p class="uppercase text-xs mt-2">{{ chartType.type }}</p>
       </button>

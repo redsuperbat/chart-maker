@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'cm-button',
+  selector: 'button[cm-button]',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
 })

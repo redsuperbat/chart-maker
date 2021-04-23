@@ -11,3 +11,13 @@ export const unsubscribeCollection = (subs: SubscriptionCollection) =>
 export interface SubscriptionCollection {
   [key: string]: Subscription;
 }
+
+export const getRandomColor = () => {
+  return `rgb(${randomNumber(255)}, ${randomNumber(255)}, ${randomNumber(
+    255
+  )})`;
+};
+
+export const randomNumber = (n: number) => {
+  return Math.round(Math.random() * n);
+};

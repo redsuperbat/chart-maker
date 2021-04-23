@@ -8,11 +8,6 @@ import {
 import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
-export interface ToolbarDataItem {
-  item: string;
-  value: string;
-}
-
 @Component({
   selector: 'tr[toolbar-data-item]',
   templateUrl: './toolbar-data-item.component.html',

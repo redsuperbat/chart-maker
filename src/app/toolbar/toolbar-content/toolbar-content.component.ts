@@ -1,10 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { ToolbarContentService } from 'src/app/services/toolbar-content.service';
+import { ToolbarService } from 'src/app/services/toolbar.service';
 import { SubscriptionCollection, unsubscribeCollection } from 'src/utils';
-import { ToolbarDataItem } from './toolbar-data-item/toolbar-data-item.component';
 
 @Component({
   selector: 'cm-toolbar-content',
@@ -14,7 +12,7 @@ import { ToolbarDataItem } from './toolbar-data-item/toolbar-data-item.component
 export class ToolbarContentComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
-    private toolbarContntentService: ToolbarContentService
+    private toolbarService: ToolbarService
   ) {}
 
   private subs: SubscriptionCollection = {};
@@ -22,8 +20,7 @@ export class ToolbarContentComponent implements OnInit, OnDestroy {
   public form: FormGroup;
 
   ngOnInit(): void {
-    const initalToolbarContent = this.toolbarContntentService.toolbarContent$
-      .value;
+    const initalToolbarContent = this.toolbarService.toolbarContent$.value;
 
     this.form = this.fb.group({
       chartTitle: [initalToolbarContent.chartTitle],
@@ -39,7 +36,7 @@ export class ToolbarContentComponent implements OnInit, OnDestroy {
 
     this.subs.formValueChanges = this.form.valueChanges
       .pipe(debounceTime(300))
-      .subscribe(this.toolbarContntentService.toolbarContent$);
+      .subscribe(this.toolbarService.toolbarContent$);
   }
 
   get dataItemForms(): FormArray {

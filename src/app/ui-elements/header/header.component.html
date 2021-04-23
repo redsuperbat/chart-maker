@@ -2,7 +2,7 @@
   class="flex p-2 bg-white border-b border-gray-200 items-center justify-between"
 >
   <div>Icon</div>
-  <cm-button>
+  <button cm-button (click)="handleExportClick()">
     <div class="flex items-center">
       <svg style="width: 20px; height: 20px" viewBox="0 0 24 24">
         <path
@@ -12,5 +12,5 @@
       </svg>
       <span class="ml-2">Download</span>
     </div>
-  </cm-button>
+  </button>
 </header>
