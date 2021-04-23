@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ToolbarDataItem } from '../toolbar/toolbar-content/toolbar-data-item/toolbar-data-item.component';
 
-interface ToolbarContent {
+export interface ToolbarContent {
   chartTitle: string;
   dataItems: ToolbarDataItem[];
 }
@@ -15,7 +15,7 @@ export class ToolbarContentService {
     chartTitle: 'Shopping Cart',
     dataItems: [
       { item: 'Apple Watch', value: '75' },
-      { item: 'Apple Watch', value: '75' },
+      { item: 'Cuddly Bear', value: '45' },
     ],
   });
 }

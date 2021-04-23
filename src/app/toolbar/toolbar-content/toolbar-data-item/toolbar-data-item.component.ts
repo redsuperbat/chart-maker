@@ -34,5 +34,8 @@ export class ToolbarDataItemComponent {
   @Output()
   public onDelete = new EventEmitter();
 
+  @Output()
+  public onShiftOrder = new EventEmitter<'up' | 'down'>();
+
   public onHover$ = new BehaviorSubject(false);
 }

@@ -7,7 +7,7 @@
       type="text"
       id="title"
       class="border-b border-gray-200 p-2"
-      formControlName="title"
+      formControlName="chartTitle"
     />
   </div>
   <div class="flex flex-col">
@@ -27,6 +27,7 @@
           *ngFor="let dataItem of dataItemForms.controls; let i = index"
           [dataItemForm]="dataItem"
           (onDelete)="removeDataItem(i)"
+          (onShiftOrder)="shiftOrderDataItem($event, i)"
         ></tr>
       </tbody>
     </table>

@@ -1,5 +1,36 @@
 <ng-container [formGroup]="dataItemForm">
-  <td></td>
+  <td class="w-4 h-9">
+    <div [hidden]="!(onHover$ | async)">
+      <svg class="w-3 h-9" viewBox="0 0 9 35">
+        <path
+          id="Polygon 1"
+          (click)="onShiftOrder.emit('up')"
+          class="hover:bg-black cursor-pointer"
+          d="M4.5 0L0.602886 14.25H8.39711L4.5 0Z"
+          fill="#C4C4C4"
+        />
+        <path
+          (click)="onShiftOrder.emit('down')"
+          id="Polygon 3"
+          class="cursor-pointer"
+          d="M4.5 35L8.39711 20.75H0.602886L4.5 35Z"
+          fill="#C4C4C4"
+        />
+        <circle id="Ellipse 1" cx="1.5" cy="15.5" r="0.5" fill="#C4C4C4" />
+        <circle id="Ellipse 2" cx="3.5" cy="15.5" r="0.5" fill="#C4C4C4" />
+        <circle id="Ellipse 3" cx="5.5" cy="15.5" r="0.5" fill="#C4C4C4" />
+        <circle id="Ellipse 4" cx="7.5" cy="15.5" r="0.5" fill="#C4C4C4" />
+        <circle id="Ellipse 6" cx="1.5" cy="17.5" r="0.5" fill="#C4C4C4" />
+        <circle id="Ellipse 7" cx="3.5" cy="17.5" r="0.5" fill="#C4C4C4" />
+        <circle id="Ellipse 8" cx="5.5" cy="17.5" r="0.5" fill="#C4C4C4" />
+        <circle id="Ellipse 9" cx="7.5" cy="17.5" r="0.5" fill="#C4C4C4" />
+        <circle id="Ellipse 11" cx="1.5" cy="19.5" r="0.5" fill="#C4C4C4" />
+        <circle id="Ellipse 12" cx="3.5" cy="19.5" r="0.5" fill="#C4C4C4" />
+        <circle id="Ellipse 13" cx="5.5" cy="19.5" r="0.5" fill="#C4C4C4" />
+        <circle id="Ellipse 14" cx="7.5" cy="19.5" r="0.5" fill="#C4C4C4" />
+      </svg>
+    </div>
+  </td>
   <td>
     <input
       type="text"

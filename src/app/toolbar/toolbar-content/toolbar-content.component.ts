@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { ToolbarContentService } from 'src/app/services/toolbar-content.service';
 import { SubscriptionCollection, unsubscribeCollection } from 'src/utils';
 import { ToolbarDataItem } from './toolbar-data-item/toolbar-data-item.component';
@@ -25,7 +26,7 @@ export class ToolbarContentComponent implements OnInit, OnDestroy {
       .value;
 
     this.form = this.fb.group({
-      title: [initalToolbarContent.chartTitle],
+      chartTitle: [initalToolbarContent.chartTitle],
       dataItems: this.fb.array(
         initalToolbarContent.dataItems.map((dataItem) =>
           this.fb.group({
@@ -36,9 +37,9 @@ export class ToolbarContentComponent implements OnInit, OnDestroy {
       ),
     });
 
-    this.subs.formValueChanges = this.form.valueChanges.subscribe(
-      this.toolbarContntentService.toolbarContent$
-    );
+    this.subs.formValueChanges = this.form.valueChanges
+      .pipe(debounceTime(300))
+      .subscribe(this.toolbarContntentService.toolbarContent$);
   }
 
   get dataItemForms(): FormArray {
@@ -56,6 +57,17 @@ export class ToolbarContentComponent implements OnInit, OnDestroy {
         item: [''],
         value: ['10'],
       })
+    );
+  }
+
+  shiftOrderDataItem(order: 'up' | 'down', index: number) {
+    if (index === 0 && order === 'up') return;
+    if (index === this.dataItemForms.length - 1 && order === 'down') return;
+    const dataItemFormGroup = this.dataItemForms.at(index) as FormGroup;
+    this.dataItemForms.removeAt(index);
+    this.dataItemForms.insert(
+      order === 'up' ? index - 1 : index + 1,
+      dataItemFormGroup
     );
   }
 
