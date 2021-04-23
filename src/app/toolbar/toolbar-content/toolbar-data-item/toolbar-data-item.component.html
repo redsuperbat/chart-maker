@@ -1,33 +1,25 @@
-<td></td>
-<td>
-  <input
-    type="text"
-    class="w-8/12"
-    (change)="onTitleChange$.next($event.target.value)"
-    #inputTitle
-    [value]="title"
-  />
-</td>
-<td></td>
-<td>
-  <input
-    type="text"
-    class="w-6/12"
-    #inputValue
-    (change)="onValueChange$.next($event.target.value)"
-    [value]="value"
-  />
-</td>
-<td (click)="onDeleteClick()">
-  <svg
-    style="width: 20px; height: 20px"
-    [hidden]="false"
-    role="button"
-    viewBox="0 0 24 24"
-  >
-    <path
-      fill="lightgray"
-      d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z"
+<ng-container [formGroup]="dataItemForm">
+  <td></td>
+  <td>
+    <input
+      type="text"
+      class="w-9/12 text-sm p-1"
+      formControlName="item"
+      placeholder="Type to add.."
     />
-  </svg>
-</td>
+  </td>
+  <td></td>
+  <td>
+    <input type="text" class="w-6/12 text-sm p-1" formControlName="value" />
+  </td>
+  <td class="w-6 h-5">
+    <div (click)="onDelete.emit()" [hidden]="!(onHover$ | async)">
+      <svg class="w-5 h-5" [hidden]="false" role="button" viewBox="0 0 24 24">
+        <path
+          fill="lightgray"
+          d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z"
+        />
+      </svg>
+    </div>
+  </td>
+</ng-container>

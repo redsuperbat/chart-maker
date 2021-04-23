@@ -1,9 +1,14 @@
-<div class="flex flex-col p-5 space-y-3">
+<form class="flex flex-col p-5 space-y-3" [formGroup]="form">
   <div class="flex flex-col">
     <label for="title" class="uppercase text-xs text-gray-400">
       chart title
     </label>
-    <input type="text" id="title" class="border-b border-gray-200 p-2" />
+    <input
+      type="text"
+      id="title"
+      class="border-b border-gray-200 p-2"
+      formControlName="title"
+    />
   </div>
   <div class="flex flex-col">
     <label for="title" class="uppercase text-xs text-gray-400">data</label>
@@ -15,12 +20,18 @@
         <th>Value</th>
         <th></th>
       </thead>
-      <tbody>
-        <!-- <tr>
-          <th>Delete</th>
-        </tr> -->
-        <tr toolbar-data-item></tr>
+      <tbody formArrayName="dataItems">
+        <tr
+          toolbar-data-item
+          class="border-t border-gray-200 h-14"
+          *ngFor="let dataItem of dataItemForms.controls; let i = index"
+          [dataItemForm]="dataItem"
+          (onDelete)="removeDataItem(i)"
+        ></tr>
       </tbody>
     </table>
+    <div class="flex justify-center w-full border border-gray-200">
+      <button class="w-full p-2" (click)="addDataItem()">Add item</button>
+    </div>
   </div>
-</div>
+</form>
