@@ -131,11 +131,7 @@ export class GraphCanvasComponent implements AfterViewInit, OnDestroy {
   ) {
     this.chart?.destroy();
     this.chart = null;
-    const dataset = {
-      data: toolbarContent.dataItems.map((d) => Number(d.value)),
-      backgroundColor: toolbarContent.dataItems.map((_, i) => colors[i]),
-      label: toolbarContent.chartTitle,
-    };
+    const dataset = this.generateDataset(toolbarContent);
     const chartConfig = { ...defaultGraphConfig };
     chartConfig.data.datasets = [dataset];
     chartConfig.data.labels = toolbarContent.dataItems.map((d) => d.item);
@@ -143,14 +139,19 @@ export class GraphCanvasComponent implements AfterViewInit, OnDestroy {
     this.chart = new Chart(this.createNewCanvasElement(), chartConfig);
   }
 
+  private generateDataset(toolbarContent: ToolbarContent) {
+    return {
+      data: toolbarContent.dataItems.map((d) => Number(d.value)),
+      backgroundColor: toolbarContent.dataItems.map((_, i) => colors[i]),
+      label: toolbarContent.chartTitle,
+    };
+  }
+
   private handleToolbarContentUpdate(toolbarContent: ToolbarContent) {
     if (this.chart?.options.plugins?.title) {
       this.chart.options.plugins.title.text = toolbarContent.chartTitle;
     }
-    const dataset = {
-      data: toolbarContent.dataItems.map((d) => Number(d.value)),
-      backgroundColor: toolbarContent.dataItems.map((_, i) => colors[i]),
-    };
+    const dataset = this.generateDataset(toolbarContent);
     if (this.chart) {
       this.chart.data.datasets = [dataset];
       this.chart.data.labels = toolbarContent.dataItems.map((d) => d.item);

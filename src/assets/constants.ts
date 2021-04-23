@@ -17,8 +17,8 @@ export const renderMiddleTotal: Plugin = {
       const dataset = chart.data.datasets[0];
       if (!dataset) return;
 
-      let text = (dataset.data as number[]).reduce(
-        (acc, curr) => Number(acc) + Number(curr),
+      const text = (dataset.data as number[]).reduce(
+        (acc, curr) => acc + curr,
         0
       );
       if (isNaN(text)) return;

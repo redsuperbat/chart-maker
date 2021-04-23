@@ -1,7 +1,13 @@
 <header
   class="flex p-2 bg-white border-b border-gray-200 items-center justify-between"
 >
-  <div>Icon</div>
+  <div class="flex space-x-5">
+    <img src="assets/icons/favicon-32x32.png" alt="icon" />
+    <div class="flex flex-col text-xs">
+      <p class="font-bold">Free</p>
+      <p>Graph Maker</p>
+    </div>
+  </div>
   <button cm-button (click)="handleExportClick()">
     <div class="flex items-center">
       <svg style="width: 20px; height: 20px" viewBox="0 0 24 24">
