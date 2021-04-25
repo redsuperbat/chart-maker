@@ -1,8 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
 import { ToolbarService } from 'src/app/services/toolbar.service';
-import { SubscriptionCollection, unsubscribeCollection } from 'src/utils';
+import { ToolbarContent } from 'src/app/types';
+import {
+  getRandomColor,
+  SubscriptionCollection,
+  unsubscribeCollection,
+} from 'src/utils';
 
 @Component({
   selector: 'cm-toolbar-content',
@@ -19,12 +25,19 @@ export class ToolbarContentComponent implements OnInit, OnDestroy {
   public form: FormGroup;
 
   ngOnInit(): void {
-    const initalToolbarContent = this.toolbarService.toolbarContent$.value;
+    const initalToolbarContentData = this.toolbarService.toolbarContent$.value;
+    this.generateForm(initalToolbarContentData);
 
+    this.subs.formValueChanges = this.form.valueChanges
+      .pipe(debounceTime(300))
+      .subscribe(this.toolbarService.toolbarContent$);
+  }
+
+  private generateForm(toolbarContent: ToolbarContent) {
     this.form = this.fb.group({
-      chartTitle: [initalToolbarContent.chartTitle],
+      chartTitle: [toolbarContent.chartTitle],
       dataItems: this.fb.array(
-        initalToolbarContent.dataItems.map((dataItem) =>
+        toolbarContent.dataItems.map((dataItem) =>
           this.fb.group({
             item: [dataItem.item],
             value: [dataItem.value],
@@ -33,10 +46,6 @@ export class ToolbarContentComponent implements OnInit, OnDestroy {
         )
       ),
     });
-
-    this.subs.formValueChanges = this.form.valueChanges
-      .pipe(debounceTime(300))
-      .subscribe(this.toolbarService.toolbarContent$);
   }
 
   get dataItemForms(): FormArray {
@@ -53,6 +62,7 @@ export class ToolbarContentComponent implements OnInit, OnDestroy {
       this.fb.group({
         item: [''],
         value: ['10'],
+        color: [getRandomColor()],
       })
     );
   }

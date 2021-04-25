@@ -12,7 +12,7 @@ import {
   unsubscribeCollection,
 } from 'src/utils';
 import { ToolbarContent, ToolbarDesign } from '../types';
-import { colors, defaultGraphConfig } from '../../assets/constants';
+import { defaultGraphConfig } from '../../assets/constants';
 import { ToolbarService } from '../services/toolbar.service';
 import { ExportGraphService } from '../services/export-graph.service';
 import Chart from 'src/utils/chart-js';

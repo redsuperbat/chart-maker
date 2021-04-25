@@ -7,7 +7,8 @@ import {
   Output,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'tr[toolbar-data-item]',
@@ -15,10 +16,14 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./toolbar-data-item.component.scss'],
 })
 export class ToolbarDataItemComponent implements OnInit {
+  public color$: Observable<string>;
   public color: string;
 
   ngOnInit() {
-    this.color = this.dataItemForm.controls['color'].value as string;
+    const color = this.dataItemForm.controls['color'].value;
+    this.color$ = this.dataItemForm.controls['color'].valueChanges.pipe(
+      startWith(color)
+    );
   }
 
   @Input()

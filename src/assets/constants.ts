@@ -1,5 +1,5 @@
 import { ChartConfiguration } from 'chart.js';
-import { ChartType } from 'src/app/types';
+import { ChartType, ToolbarContent, ToolbarDesign } from 'src/app/types';
 
 export const defaultGraphConfig: ChartConfiguration = {
   type: 'doughnut',
@@ -59,3 +59,17 @@ export const chartTypes: ChartType[] = [
     image: '/assets/images/polar-area-chart.svg',
   },
 ];
+
+export const initalToolbarContent: ToolbarContent = {
+  chartTitle: 'Shopping Cart',
+  dataItems: [
+    { item: 'Apple Watch', value: '75', color: '#c6e2ff' },
+    { item: 'Cuddly Bear', value: '45', color: '#ffa500' },
+    { item: 'Bubbly Champagne', value: '-12', color: '#bada55' },
+    { item: 'Tricky Salamander', value: '23', color: '#ff7373' },
+  ],
+};
+
+export const initalToolbarDesign: ToolbarDesign = {
+  type: 'doughnut',
+};

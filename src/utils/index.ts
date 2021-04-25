@@ -27,3 +27,11 @@ export const deepCopy = <T>(obj: T) => {
   const __deepCopy = rfdc();
   return __deepCopy(obj);
 };
+
+export function base64UrlEncode(input: string) {
+  return encodeURI(btoa(input));
+}
+
+export function base64UrlDecode(input: string) {
+  return atob(decodeURI(input));
+}
