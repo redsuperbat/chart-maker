@@ -12,10 +12,10 @@ export class ToolbarService {
   public toolbarContent$ = new BehaviorSubject<ToolbarContent>({
     chartTitle: 'Shopping Cart',
     dataItems: [
-      { item: 'Apple Watch', value: '75' },
-      { item: 'Cuddly Bear', value: '45' },
-      { item: 'Bubbly Champagne', value: '-12' },
-      { item: 'Tricky Salamander', value: '23' },
+      { item: 'Apple Watch', value: '75', color: '#c6e2ff' },
+      { item: 'Cuddly Bear', value: '45', color: '#ffa500' },
+      { item: 'Bubbly Champagne', value: '-12', color: '#bada55' },
+      { item: 'Tricky Salamander', value: '23', color: '#ff7373' },
     ],
   });
 }

@@ -1,4 +1,6 @@
-export type ChartTypeItem = 'bar' | 'pie' | 'doughnut' | 'line';
+import { ChartConfiguration } from 'chart.js';
+
+export type ChartTypeItem = ChartConfiguration['type'];
 
 export interface ChartType {
   type: ChartTypeItem;
@@ -17,4 +19,5 @@ export interface ToolbarDesign {
 export interface ToolbarDataItem {
   item: string;
   value: string;
+  color: string;
 }

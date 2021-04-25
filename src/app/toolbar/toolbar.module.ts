@@ -7,6 +7,7 @@ import { ToolbarRoutingModule } from './toolbar-routing.module';
 import { ToolbarDataItemComponent } from './toolbar-content/toolbar-data-item/toolbar-data-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UiElementsModule } from '../ui-elements/ui-elements.module';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { UiElementsModule } from '../ui-elements/ui-elements.module';
     FormsModule,
     ReactiveFormsModule,
     UiElementsModule,
+    ColorPickerModule,
   ],
   exports: [ToolbarComponent],
 })

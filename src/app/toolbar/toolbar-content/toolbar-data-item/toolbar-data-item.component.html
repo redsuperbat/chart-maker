@@ -34,14 +34,25 @@
   <td>
     <input
       type="text"
-      class="w-full text-sm p-1"
+      class="text-sm p-1 w-40"
       formControlName="item"
       placeholder="Type to add.."
     />
   </td>
-  <td></td>
   <td>
-    <input type="text" class="w-6/12 text-sm p-1" formControlName="value" />
+    <input
+      type="text"
+      class="w-6/12 text-sm p-1 rounded-md"
+      formControlName="value"
+    />
+  </td>
+  <td>
+    <input
+      class="w-4 h-4 mx-2 cursor-pointer"
+      [colorPicker]="color"
+      (colorPickerChange)="handleColorChange($event)"
+      [style.background]="color"
+    />
   </td>
   <td class="w-6 h-5">
     <div (click)="onDelete.emit()" [hidden]="!(onHover$ | async)">

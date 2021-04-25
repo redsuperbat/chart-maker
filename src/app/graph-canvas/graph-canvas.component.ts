@@ -76,7 +76,7 @@ export class GraphCanvasComponent implements AfterViewInit, OnDestroy {
   private generateDataset(toolbarContent: ToolbarContent) {
     return {
       data: toolbarContent.dataItems.map((d) => Number(d.value)),
-      backgroundColor: toolbarContent.dataItems.map((_, i) => colors[i]),
+      backgroundColor: toolbarContent.dataItems.map((d) => d.color),
       label: toolbarContent.chartTitle,
     };
   }

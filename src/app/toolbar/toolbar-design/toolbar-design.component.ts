@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ToolbarService } from 'src/app/services/toolbar.service';
 import { ChartType, ChartTypeItem } from 'src/app/types';
+import { chartTypes } from 'src/assets/constants';
 
 @Component({
   selector: 'cm-toolbar-design',
@@ -10,24 +11,7 @@ import { ChartType, ChartTypeItem } from 'src/app/types';
   styleUrls: ['./toolbar-design.component.scss'],
 })
 export class ToolbarDesignComponent implements OnInit {
-  public chartTypes: ChartType[] = [
-    {
-      type: 'doughnut',
-      image: '/assets/images/doughnut-chart.svg',
-    },
-    {
-      type: 'pie',
-      image: '/assets/images/pie-chart.svg',
-    },
-    {
-      type: 'line',
-      image: '/assets/images/line-chart.svg',
-    },
-    {
-      type: 'bar',
-      image: '/assets/images/bar-chart.svg',
-    },
-  ];
+  public chartTypes: ChartType[] = chartTypes;
 
   constructor(private toolbarService: ToolbarService) {}
   public chartTypeItem$: Observable<ChartTypeItem>;

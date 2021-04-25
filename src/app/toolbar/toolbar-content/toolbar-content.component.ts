@@ -16,7 +16,6 @@ export class ToolbarContentComponent implements OnInit, OnDestroy {
   ) {}
 
   private subs: SubscriptionCollection = {};
-
   public form: FormGroup;
 
   ngOnInit(): void {
@@ -29,6 +28,7 @@ export class ToolbarContentComponent implements OnInit, OnDestroy {
           this.fb.group({
             item: [dataItem.item],
             value: [dataItem.value],
+            color: [dataItem.color],
           })
         )
       ),
