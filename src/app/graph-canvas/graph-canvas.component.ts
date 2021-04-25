@@ -5,41 +5,17 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
-import {
-  ArcElement,
-  BarController,
-  BarElement,
-  BubbleController,
-  CategoryScale,
-  Chart,
-  DoughnutController,
-  Filler,
-  Legend,
-  LinearScale,
-  LineController,
-  LineElement,
-  LogarithmicScale,
-  PieController,
-  PointElement,
-  PolarAreaController,
-  RadarController,
-  RadialLinearScale,
-  ScatterController,
-  TimeScale,
-  TimeSeriesScale,
-  Title,
-} from 'chart.js';
 import { withLatestFrom } from 'rxjs/operators';
-import { SubscriptionCollection, unsubscribeCollection } from 'src/utils';
-import { ToolbarContent, ToolbarDesign } from '../types';
 import {
-  colors,
-  defaultGraphConfig,
-  renderMiddleTotal,
-  renderWhite,
-} from '../../assets/constants';
+  deepCopy,
+  SubscriptionCollection,
+  unsubscribeCollection,
+} from 'src/utils';
+import { ToolbarContent, ToolbarDesign } from '../types';
+import { colors, defaultGraphConfig } from '../../assets/constants';
 import { ToolbarService } from '../services/toolbar.service';
 import { ExportGraphService } from '../services/export-graph.service';
+import Chart from 'src/utils/chart-js';
 
 @Component({
   selector: 'cm-graph-canvas',
@@ -54,38 +30,12 @@ export class GraphCanvasComponent implements AfterViewInit, OnDestroy {
 
   private subs: SubscriptionCollection = {};
 
-  @ViewChild('canvasWrapper')
-  private canvasWrapper: ElementRef<HTMLDivElement>;
-  private chart: Chart | null;
-  private currentCanvas: HTMLCanvasElement;
+  @ViewChild('canvas')
+  private canvas: ElementRef<HTMLCanvasElement>;
+  private chart: Chart;
 
   public ngAfterViewInit(): void {
-    Chart.register(
-      ArcElement,
-      LineElement,
-      BarElement,
-      PointElement,
-      BarController,
-      BubbleController,
-      DoughnutController,
-      LineController,
-      PieController,
-      PolarAreaController,
-      RadarController,
-      ScatterController,
-      CategoryScale,
-      LinearScale,
-      LogarithmicScale,
-      RadialLinearScale,
-      TimeScale,
-      TimeSeriesScale,
-      Filler,
-      Legend,
-      Title,
-      renderWhite,
-      renderMiddleTotal
-    );
-    this.chart = new Chart(this.createNewCanvasElement(), defaultGraphConfig);
+    this.chart = new Chart(this.canvas.nativeElement, defaultGraphConfig);
     this.subs.toolbarContentSub = this.toolbarService.toolbarContent$.subscribe(
       (v) => this.handleToolbarContentUpdate(v)
     );
@@ -101,7 +51,7 @@ export class GraphCanvasComponent implements AfterViewInit, OnDestroy {
   }
 
   private exportCanvas() {
-    this.currentCanvas.toBlob((blob) => {
+    this.canvas.nativeElement.toBlob((blob) => {
       const uri = URL.createObjectURL(blob);
       const download = document.createElement('a');
       download.href = uri;
@@ -110,33 +60,17 @@ export class GraphCanvasComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  private createNewCanvasElement() {
-    this.chart?.destroy();
-    document.querySelector('#canvas')?.remove();
-    const canvas = document.createElement('canvas');
-    canvas.id = 'canvas';
-    this.currentCanvas = canvas;
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
-    this.canvasWrapper.nativeElement.appendChild(canvas);
-    return canvas;
-  }
-
   private async handleToolbarDesignUpdate(
     toolbarDesign: ToolbarDesign,
     toolbarContent: ToolbarContent
   ) {
     this.chart?.destroy();
-    this.chart = null;
     const dataset = this.generateDataset(toolbarContent);
-    const chartConfig = { ...defaultGraphConfig };
+    const chartConfig = deepCopy(defaultGraphConfig);
     chartConfig.data.datasets = [dataset];
     chartConfig.data.labels = toolbarContent.dataItems.map((d) => d.item);
     chartConfig.type = toolbarDesign.type;
-    this.chart = new Chart(this.createNewCanvasElement(), chartConfig);
+    this.chart = new Chart(this.canvas.nativeElement, chartConfig);
   }
 
   private generateDataset(toolbarContent: ToolbarContent) {

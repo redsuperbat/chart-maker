@@ -1,3 +1,4 @@
+import rfdc from 'rfdc';
 import { Subscription } from 'rxjs/internal/Subscription';
 
 export const unsubscribeCollection = (subs: SubscriptionCollection) =>
@@ -20,4 +21,9 @@ export const getRandomColor = () => {
 
 export const randomNumber = (n: number) => {
   return Math.round(Math.random() * n);
+};
+
+export const deepCopy = <T>(obj: T) => {
+  const __deepCopy = rfdc();
+  return __deepCopy(obj);
 };

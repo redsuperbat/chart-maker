@@ -2,8 +2,6 @@
   height: calc(100vh - 50px);
 }
 
-#canvas {
-  height: calc(100vh - 50px - 5rem);
-  width: calc(100vw - 340px - 5rem);
-  background-color: white;
+canvas {
+  max-height: calc(100vh - 50px - 5rem);
 }
