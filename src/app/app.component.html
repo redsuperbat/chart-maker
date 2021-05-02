@@ -1,5 +1,13 @@
-<div class="app-grid">
+<div class="app-grid" *ngIf="showApp; else showMobileError">
   <cm-header> </cm-header>
   <cm-toolbar></cm-toolbar>
   <cm-graph-canvas></cm-graph-canvas>
 </div>
+
+<ng-template #showMobileError>
+  <div class="grid h-screen w-screen place-items-center p-5">
+    <h1 class="text-center text-lg">
+      The app does not work on mobile. Please try on a desktop computer.
+    </h1>
+  </div>
+</ng-template>

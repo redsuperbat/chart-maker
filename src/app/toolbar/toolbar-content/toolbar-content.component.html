@@ -12,25 +12,27 @@
   </div>
   <div class="flex flex-col">
     <label for="title" class="uppercase text-xs text-gray-400">data</label>
-    <table class="mt-5">
-      <thead class="text-left text-xs text-gray-500">
-        <th></th>
-        <th>Item</th>
-        <th>Value</th>
-        <th></th>
-        <th></th>
-      </thead>
-      <tbody formArrayName="dataItems">
-        <tr
-          toolbar-data-item
-          class="border-t border-gray-200 h-14"
-          *ngFor="let dataItem of dataItemForms.controls; let i = index"
-          [dataItemForm]="dataItem"
-          (onDelete)="removeDataItem(i)"
-          (onShiftOrder)="shiftOrderDataItem($event, i)"
-        ></tr>
-      </tbody>
-    </table>
+    <div id="table-wrapper">
+      <table class="mt-5">
+        <thead class="text-left text-xs text-gray-500">
+          <th></th>
+          <th>Item</th>
+          <th>Value</th>
+          <th></th>
+          <th></th>
+        </thead>
+        <tbody formArrayName="dataItems">
+          <tr
+            toolbar-data-item
+            class="border-t border-gray-200 h-14"
+            *ngFor="let dataItem of dataItemForms.controls; let i = index"
+            [dataItemForm]="dataItem"
+            (onDelete)="removeDataItem(i)"
+            (onShiftOrder)="shiftOrderDataItem($event, i)"
+          ></tr>
+        </tbody>
+      </table>
+    </div>
     <div class="flex justify-center w-full">
       <button cm-button class="w-full p-2" (click)="addDataItem()">
         Add item
